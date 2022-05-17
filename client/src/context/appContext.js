@@ -2,7 +2,7 @@ import React, { useReducer, useContext } from 'react';
 import {
     DISPLAY_ALERT, CLEAR_ALERT, ADD_USER_BEGIN, ADD_USER_SUCCESS, ADD_USER_ERROR, LOGIN_USER_BEGIN,
     LOGIN_USER_SUCCESS,
-    LOGIN_USER_ERROR, TOGGLE_SIDEBAR,
+    LOGIN_USER_ERROR, TOGGLE_SIDEBAR, LOGOUT_USER
 } from "./actions";
 import axios from 'axios';
 import reducer from './reducer';
@@ -100,8 +100,12 @@ const AppProvider = ({ children }) => {
     const toggleSidebar = () => {
         dispatch({ type: TOGGLE_SIDEBAR })
     }
+    const logoutUser = () => {
+        dispatch({ type: LOGOUT_USER })
+        removeUserFromLocalStorage()
+    }
     return (
-        <AppContext.Provider value={{ ...state, displayAlert, addUser, loginUser, toggleSidebar, }}>
+        <AppContext.Provider value={{ ...state, displayAlert, addUser, loginUser, toggleSidebar, logoutUser }}>
             {children}
         </AppContext.Provider>
     )
