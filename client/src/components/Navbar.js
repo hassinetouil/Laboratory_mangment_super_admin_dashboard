@@ -18,7 +18,7 @@ function Navbar() {
                     <h3 className="logo-text">dashboard</h3>
                 </div>
                 <div className="btn-container">
-                    <button type="button" className='btn' onClick={() => setShowLogout(!showLogout)}><FaUserCircle />Admin<FaCaretDown /> </button>
+                    <button type="button" className='btn' onClick={() => setShowLogout(!showLogout)}><FaUserCircle />{user.name}<FaCaretDown /> </button>
                     <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
                         <button type="button" className="dropdown-btn" onClick={logoutUser}>
                             logout

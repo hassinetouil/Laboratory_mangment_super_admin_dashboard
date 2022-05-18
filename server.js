@@ -6,10 +6,8 @@ dotenv.config()
 import 'express-async-errors'
 import connectDB from './db/connect.js'
 import authRouter from './routes/authRoutes.js'
-import labRouter from './routes/labRouters.js'
 import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
-// import { Routes } from 'react-router-dom';
 
 app.use(express.json())
 app.get('/', (req, res) => { 
@@ -20,7 +18,6 @@ app.get('/api/v1', (req, res) => {
 })
 
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/lab', labRouter)
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 

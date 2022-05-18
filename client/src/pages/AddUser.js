@@ -6,7 +6,6 @@ const initialState = {
     name: "",
     email: "",
     password: "",
-    isMember: false,
 }
 const AddUser = () => {
     const [values, setValues] = useState(initialState);
