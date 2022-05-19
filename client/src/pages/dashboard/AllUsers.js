@@ -1,9 +1,14 @@
 import React from 'react'
+import {SearchContainer, UsersContainer} from "../../components/index.js"
 
 function AllUsers() {
-  
+
   return (
-    <h1>All Users page</h1>
+  <div>
+      <SearchContainer />
+      <UsersContainer/>
+    </div>
+
   )
 }
 

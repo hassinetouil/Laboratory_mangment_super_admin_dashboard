@@ -73,7 +73,17 @@ const updateUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
 
     const users = await User.find()
-    res.json(users)
+    res
+        .status(StatusCodes.OK)
+        .json({ users, totalUsers: users.length, })
 }
-
-export { addUser, updateUser, login, getAllUsers }
+const deleteUser = async (req, res) => {
+    const { id: userId } = req.params
+    const user = await User.findOne({ _id: userId })
+    if (!user) {
+        throw new CustomError.NotFoundError(`No user with id : ${userId}`)
+    }
+    await user.remove()
+    res.status(StatusCodes.OK).json({ msg: 'Success! User removed' })
+}
+export { addUser, updateUser, login, getAllUsers, deleteUser }

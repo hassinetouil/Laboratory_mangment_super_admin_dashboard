@@ -11,7 +11,9 @@ import {
     UPDATE_USER_ERROR,
     LOGIN_USER_ERROR,
     TOGGLE_SIDEBAR,
-    LOGOUT_USER
+    LOGOUT_USER,
+    GET_USERS_BEGIN,
+    GET_USERS_SUCCESS,
 } from "./actions";
 import { initialState } from './appContext'
 const reducer = (state, action) => {
@@ -115,6 +117,17 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: 'danger',
             alertText: action.payload.msg,
+        }
+    }
+    if (action.type === GET_USERS_BEGIN) {
+        return { ...state, isLoading: true, showAlert: false }
+    }
+    if (action.type === GET_USERS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            users: action.payload.users,
+            totalUsers: action.payload.totalUsers,
         }
     }
     throw new Error(`no such action : ${action.type}`)

@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import {
     DISPLAY_ALERT,
     CLEAR_ALERT,
@@ -12,7 +12,9 @@ import {
     UPDATE_USER_ERROR,
     LOGIN_USER_ERROR,
     TOGGLE_SIDEBAR,
-    LOGOUT_USER
+    LOGOUT_USER,
+    GET_USERS_BEGIN,
+    GET_USERS_SUCCESS,
 } from "./actions";
 import axios from 'axios';
 import reducer from './reducer';
@@ -31,6 +33,8 @@ const initialState = {
     userLocation: userLocation || '',
     LabLocation: userLocation || '',
     showSidebar: false,
+    users: [],
+    totalUsers: 0,
 }
 
 const AppContext = React.createContext()
@@ -88,7 +92,7 @@ const AppProvider = ({ children }) => {
     const addUser = async (currentUser) => {
         dispatch({ type: ADD_USER_BEGIN })
         try {
-            const response = await axios.post('api/v1/auth/add-user', currentUser);
+            const response = await authFetch.post('/auth/add-user', currentUser);
             console.log(response);
             const { user, token } = response.data;
             dispatch({
@@ -113,7 +117,7 @@ const AppProvider = ({ children }) => {
     const loginUser = async (currentUser) => {
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
-            const { data } = await axios.post('/api/v1/auth/login', currentUser)
+            const { data } = await authFetch.post('/auth/login', currentUser)
             console.log(data)
             const { user, token } = data
             dispatch({
@@ -150,7 +154,7 @@ const AppProvider = ({ children }) => {
                 payload: { user, token },
             })
             delete user.password
-            addUserToLocalStorage({ user, token: initialState.token})
+            addUserToLocalStorage({ user, token: initialState.token })
         } catch (error) {
             if (error.response.status !== 401) {
                 dispatch({
@@ -161,8 +165,30 @@ const AppProvider = ({ children }) => {
         }
         clearAlert()
     }
+    const getUsers = async () => {
+        dispatch({ type: GET_USERS_BEGIN })
+        try {
+            const { data } = await authFetch.get('/auth')
+            const { users, totalUsers } = data
+            dispatch({
+                type: GET_USERS_SUCCESS,
+                payload: {
+                    users,
+                    totalUsers,
+                },
+            })
+        } catch (error) {
+            console.log(error.response)
+            logoutUser()
+        }
+        clearAlert()
+    }
+
+    useEffect(() => {
+        getUsers()
+    }, [])
     return (
-        <AppContext.Provider value={{ ...state, displayAlert, addUser, loginUser, toggleSidebar, logoutUser, updateUser }}>
+        <AppContext.Provider value={{ ...state, displayAlert, addUser, loginUser, toggleSidebar, logoutUser, updateUser, getUsers }}>
             {children}
         </AppContext.Provider>
     )

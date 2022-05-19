@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Logo, FormRow, Alert } from '../../components/index';
+import {  FormRow, Alert } from '../../components/index';
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import { useAppContext } from '../../context/appContext';
 const initialState = {
@@ -22,8 +22,6 @@ const AddUser = () => {
         const currentUser = { name, lastName, email, password }
 
         addUser(currentUser)
-
-        console.log(values)
     }
     return (<Wrapper >
         <form className='form' onSubmit={onSubmit}>
