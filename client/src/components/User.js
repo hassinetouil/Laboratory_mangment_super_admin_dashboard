@@ -1,6 +1,6 @@
 import React from 'react'
 import Wrapper from '../assets/wrappers/User'
-import UserInfo from './UserInfo'
+
 
 const User = ({ _id, name, email, lastName }) => {
     return (

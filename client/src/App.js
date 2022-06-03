@@ -1,7 +1,7 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ProtectedRoute, Error, Login } from '../src/pages';
-import { AddUser, AllUsers, Profile, Stats, SharedLayout } from './pages/dashboard'
+import { AddUser, AllUsers, Profile, SharedLayout } from './pages/dashboard'
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
             <SharedLayout />
           </ProtectedRoute>
         } >
-          <Route index element={<Stats />}></Route>
+          <Route index element={<AllUsers />}></Route>
           <Route path="add-user" element={<AddUser />}></Route>
           <Route path="all-users" element={<AllUsers />}></Route>
           <Route path="profile" element={<Profile />}></Route>

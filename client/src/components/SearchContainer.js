@@ -1,8 +1,14 @@
-import React from 'react'
+import { React } from 'react'
+import FormRow from './FormRow'
+import Wrapper from '../assets/wrappers/SearchContainer'
+function SearchContainer(props) {
 
-function SearchContainer() {
   return (
-    <div>SearchContainer</div>
+    <Wrapper>
+      <div className="form">
+        <FormRow type="text" name="Search" value={props.value} handleChange={props.handleChange} />
+      </div>
+    </Wrapper>
   )
 }
 
